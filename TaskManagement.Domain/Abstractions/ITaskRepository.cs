@@ -3,8 +3,8 @@ namespace TaskManagement.Domain.Abstractions;
 
 public interface ITaskRepository
 {
-    Task CreateAsync(TaskManagement.Domain.Entities.Task task);
     Task<IEnumerable<TaskManagement.Domain.Entities.Task>> GetAllAsync();
-    Task UpdateAsync(int id, bool completed);
-    Task DeleteAsync(int id);
+    Task CreateAsync(TaskManagement.Domain.Entities.Task task);
+    Task<bool> UpdateAsync(int id, bool isCompleted);
+    Task<bool> DeleteAsync(int id);
 }
