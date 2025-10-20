@@ -8,4 +8,8 @@
         <RootNamespace>TaskManagement</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\TaskManagement.Application\TaskManagement.Application.csproj" />
+    </ItemGroup>
+
 </Project>
