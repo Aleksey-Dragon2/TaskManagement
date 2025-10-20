@@ -27,11 +27,11 @@ public class TaskRepository : ITaskRepository
                                       "VALUES (@Title, @Description, @IsCompleted, @CreatedAt)", task);
     }
 
-    public async Task<bool> UpdateAsync(int id, bool isCompleted)
+    public async Task<bool> UpdateAsync(int id)
     {
        using var connection = await _connection.CreateDbConnectionAsync();
-       var result = await connection.ExecuteAsync("UPDATE Tasks SET IsCompleted = @IsCompleted WHERE Id = @Id",
-           new { IsCompleted = isCompleted, Id = id });
+       var result = await connection.ExecuteAsync("UPDATE Tasks SET IsCompleted = NOT IsCompleted WHERE Id = @Id",
+           new { Id = id });
        return result > 0;
     }
 

@@ -22,9 +22,9 @@ public class TaskService : ITaskService
         await _taskRepository.CreateAsync(task);
     }
 
-    public async Task<bool> UpdateAsync(int id,  bool isCompleted) 
+    public async Task<bool> UpdateAsync(int id) 
     {
-       var result = await  _taskRepository.UpdateAsync(id, isCompleted);
+       var result = await  _taskRepository.UpdateAsync(id);
         return result; 
     }
 
