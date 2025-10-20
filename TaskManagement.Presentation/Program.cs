@@ -4,11 +4,11 @@ using Microsoft.Extensions.DependencyInjection;
 using TaskManagement.Application.Abstractions;
 using TaskManagement.Application.Services;
 using TaskManagement.Domain.Abstractions;
+using TaskManagement.Implementation;
 using TaskManagement.Infrastructure.Abstractions;
 using TaskManagement.Infrastructure.Factories;
 using TaskManagement.Infrastructure.Migrations;
 using TaskManagement.Infrastructure.Repositories;
-using TaskManagement.Implementation;
 namespace TaskManagement;
 
 class Program
@@ -32,14 +32,14 @@ class Program
             .Build();
 
         services.AddFluentMigratorCore()
-    .ConfigureRunner(rb => rb
+        .ConfigureRunner(rb => rb
         .AddSqlServer()
         .WithGlobalConnectionString(config.GetConnectionString("DefaultConnection"))
         .ScanIn(typeof(CreateTasksTable).Assembly).For.Migrations())
-    .AddLogging(lb => lb.AddFluentMigratorConsole());
+        .AddLogging(lb => lb.AddFluentMigratorConsole());
 
         services.AddScoped<IDbConnectionFactory, SqlConnectionFactory>(sp =>
-    new SqlConnectionFactory(config.GetConnectionString("DefaultConnection")));
+            new SqlConnectionFactory(config.GetConnectionString("DefaultConnection")));
         services.AddScoped<ITaskRepository, TaskRepository>();
         services.AddScoped<ITaskService, TaskService>();
 
