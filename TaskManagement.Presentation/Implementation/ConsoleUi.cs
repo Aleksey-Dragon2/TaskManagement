@@ -9,8 +9,8 @@ using TaskManagement.Application.Abstractions;
 using TaskManagement.Application.Services;
 
 namespace TaskManagement.Implementation
-{
-    class ConsoleUi : IConsoleUi
+{ 
+    class ConsoleUi : IConsoleUi 
     {
         private readonly ITaskService _taskService;
 
@@ -127,11 +127,12 @@ namespace TaskManagement.Implementation
                 if (int.TryParse(Console.ReadLine(), out var id))
                 {
                     await _taskService.DeleteAsync(id);
+                    Console.WriteLine("Task deleted");
+                    Console.WriteLine();
                     return;
                 }
                 Console.WriteLine("Task not found. Please try again.");
             }
-            Console.WriteLine();
         }
     }
 }
