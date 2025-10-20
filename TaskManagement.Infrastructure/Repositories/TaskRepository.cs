@@ -30,7 +30,7 @@ public class TaskRepository : ITaskRepository
     public async Task<bool> UpdateAsync(int id)
     {
        using var connection = await _connection.CreateDbConnectionAsync();
-       var result = await connection.ExecuteAsync("UPDATE Tasks SET IsCompleted = ~IsCompleted WHERE Id = @Id",
+       var result = await connection.ExecuteAsync("UPDATE Tasks SET IsCompleted = NOT IsCompleted WHERE Id = @Id",
            new { Id = id });
        return result > 0;
     }

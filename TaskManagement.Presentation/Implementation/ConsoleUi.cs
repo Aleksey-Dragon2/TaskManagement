@@ -30,10 +30,8 @@ namespace TaskManagement.Implementation
                     Console.WriteLine("3. Update status a task");
                     Console.WriteLine("4. Delete a task");
                     Console.WriteLine("0. Exit ");
-                    Console.Write("Input:");
 
                     var choise = Console.ReadLine();
-                    Console.WriteLine();
                     switch (choise)
                     {
                         case "1":
@@ -50,6 +48,7 @@ namespace TaskManagement.Implementation
                             Console.WriteLine("Invalid operation");
                             break;
                     }
+
                 }
                 catch (Exception ex)
                 {
@@ -61,14 +60,11 @@ namespace TaskManagement.Implementation
         public async Task ShowTasksAsync()
         {
             var tasks = await _taskService.GetAllAsync();
-            if (tasks.Count() == 0)
-                Console.WriteLine("No tasks");
             foreach (var task in tasks)
             {
                 Console.WriteLine($"Id: {task.Id}\nTitle: {task.Title}\nDescription: {task.Description}" +
-                    $"\nCompleted: {task.IsCompleted}\nDate of creation: {task.CreatedAt}");
+                    $"\nCompleted: {task.IsComplete}\nDate of creation: {task.CreatedAt}");
             }
-            Console.WriteLine();
         }
 
         public async Task CreateTaskAsync()
@@ -76,7 +72,7 @@ namespace TaskManagement.Implementation
             string title;
             while (true)
             {
-                Console.Write("Enter task title:");
+                Console.WriteLine("Enter task title:");
                 title = Console.ReadLine()?.Trim() ?? "";
                 if (!string.IsNullOrWhiteSpace(title))
                     break;
@@ -96,7 +92,6 @@ namespace TaskManagement.Implementation
             var task = new TaskManagement.Domain.Entities.Task(title, description);
             await _taskService.CreateAsync(task);
             Console.WriteLine("Task Added");
-            Console.WriteLine();
         }
 
         public async Task UpdateTaskAsync()
@@ -115,8 +110,6 @@ namespace TaskManagement.Implementation
                 Console.WriteLine("Task has been updated");
             else
                 Console.WriteLine("Task has not been updated");
-
-            Console.WriteLine();
         }
 
         public async Task DeleteTaskAsync()
@@ -131,7 +124,6 @@ namespace TaskManagement.Implementation
                 }
                 Console.WriteLine("Task not found. Please try again.");
             }
-            Console.WriteLine();
         }
     }
 }
