@@ -21,8 +21,5 @@ public class Task
         CreatedAt = DateTime.UtcNow;
     }
 
-    public Task()
-    {
-
-    }
+    public Task() { }
 }
