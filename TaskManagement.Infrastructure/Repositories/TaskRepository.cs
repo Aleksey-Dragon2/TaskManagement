@@ -7,10 +7,10 @@ namespace TaskManagement.Infrastructure.Repositories;
 public class TaskRepository : ITaskRepository
 {
     private readonly IDbConnectionFactory _connection;
-    
+
     public TaskRepository(IDbConnectionFactory connection)
     {
-      _connection = connection;
+        _connection = connection;
     }
 
     public async Task<IEnumerable<TaskManagement.Domain.Entities.Task>> GetAllAsync()
@@ -19,7 +19,7 @@ public class TaskRepository : ITaskRepository
         var tasks = await connection.QueryAsync<TaskManagement.Domain.Entities.Task>("SELECT * FROM Tasks");
         return tasks;
     }
-    
+
     public async Task CreateAsync(TaskManagement.Domain.Entities.Task task)
     {
         using var connection = await _connection.CreateDbConnectionAsync();
@@ -29,10 +29,10 @@ public class TaskRepository : ITaskRepository
 
     public async Task<bool> UpdateAsync(int id)
     {
-       using var connection = await _connection.CreateDbConnectionAsync();
-       var result = await connection.ExecuteAsync("UPDATE Tasks SET IsCompleted = NOT IsCompleted WHERE Id = @Id",
-           new { Id = id });
-       return result > 0;
+        using var connection = await _connection.CreateDbConnectionAsync();
+        var result = await connection.ExecuteAsync("UPDATE Tasks SET IsCompleted = ~IsCompleted WHERE Id = @Id",
+            new { Id = id });
+        return result > 0;
     }
 
     public async Task<bool> DeleteAsync(int id)
@@ -40,5 +40,5 @@ public class TaskRepository : ITaskRepository
         using var connection = await _connection.CreateDbConnectionAsync();
         var result = await connection.ExecuteAsync("DELETE FROM TASKS WHERE Id = @Id", new { Id = id });
         return result > 0;
-    } 
+    }
 }
