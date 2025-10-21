@@ -32,7 +32,7 @@ namespace TaskManagement.Implementation
                     Console.WriteLine("0. Exit ");
                     Console.Write("Input:");
 
-                    var choise = Console.ReadLine();
+                    var choise = Console.ReadLine()?.Trim() ?? "";
                     Console.WriteLine();
                     switch (choise)
                     {
